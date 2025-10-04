@@ -4,7 +4,6 @@ enum ThreatType {
 
 model Threat {
   id             String     @id @default(ulid())
-  externalId     String     @unique
   mapCoordsLat   Float
   mapCoordsLon   Float
   localPositionX Float

@@ -14,7 +14,6 @@ export const threatRouter = {
       });
       const transformedThreats = threats.map((threat) => ({
         id: threat.id,
-        externalId: threat.externalId,
         mapCoords: { lat: threat.mapCoordsLat, lon: threat.mapCoordsLon },
         localPosition: { x: threat.localPositionX, y: threat.localPositionY },
         type: threat.type,
@@ -26,7 +25,6 @@ export const threatRouter = {
     .route({ method: "POST", path: "/threats" })
     .input(
       z.object({
-        externalId: z.string().min(1),
         mapCoords: z.object({ lat: z.number(), lon: z.number() }),
         localPosition: z.object({ x: z.number(), y: z.number() }),
         type: z.enum(ThreatType),
@@ -36,7 +34,6 @@ export const threatRouter = {
       async ({ input }) =>
         await prisma.threat.create({
           data: {
-            externalId: input.externalId,
             mapCoordsLat: input.mapCoords.lat,
             mapCoordsLon: input.mapCoords.lon,
             localPositionX: input.localPosition.x,
@@ -48,12 +45,25 @@ export const threatRouter = {
 
   update: publicProcedure
     .route({ method: "PUT", path: "/threats/:id" })
-    .input(z.object({ id: z.string(), externalId: z.string().min(1) }))
+    .input(
+      z.object({
+        id: z.string(),
+        mapCoords: z.object({ lat: z.number(), lon: z.number() }),
+        localPosition: z.object({ x: z.number(), y: z.number() }),
+        type: z.enum(ThreatType),
+      })
+    )
     .handler(
       async ({ input }) =>
         await prisma.threat.update({
           where: { id: input.id },
-          data: { externalId: input.externalId },
+          data: {
+            mapCoordsLat: input.mapCoords.lat,
+            mapCoordsLon: input.mapCoords.lon,
+            localPositionX: input.localPosition.x,
+            localPositionY: input.localPosition.y,
+            type: input.type,
+          },
         })
     ),
 
