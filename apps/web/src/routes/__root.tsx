@@ -52,6 +52,12 @@ function RootDocument() {
     <html className="dark" lang="en">
       <head>
         <HeadContent />
+        <link
+          crossOrigin=""
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          rel="stylesheet"
+        />
       </head>
       <body>
         <div className="grid h-svh grid-rows-[auto_1fr]">
