@@ -21,6 +21,8 @@ export const threatRouter = {
           z: threat.localPositionZ,
         },
         type: threat.type,
+        createdAt: threat.createdAt,
+        updatedAt: threat.updatedAt,
       }));
       return transformedThreats;
     }),
