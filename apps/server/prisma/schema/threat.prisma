@@ -1,0 +1,17 @@
+enum ThreatType {
+  DRONE @map("drone")
+}
+
+model Threat {
+  id             String     @id @default(ulid())
+  externalId     String     @unique
+  mapCoordsLat   Float
+  mapCoordsLon   Float
+  localPositionX Float
+  localPositionY Float
+  type           ThreatType
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@map("threat")
+}
