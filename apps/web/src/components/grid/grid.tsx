@@ -4,18 +4,18 @@ import { orpc } from "@/utils/orpc";
 import styles from "./grid.module.scss";
 
 const Grid = () => {
-  const actors = useQuery(orpc.actor.getAll.queryOptions());
-  // const threats = {
-  //   data: Array.from({ length: 6 })
-  //     .fill(null)
-  //     .map(() => ({
-  //       id: "01K6QPS3TMRBYGXS22ZVY0MH87",
-  //       externalId: "ASDSADSA",
-  //       mapCoords: { lat: 12_335_213, lon: 355 },
-  //       localPosition: { x: -5, y: 12 },
-  //       type: "DRONE",
-  //     })),
-  // };
+  // const actors = useQuery(orpc.actor.getAll.queryOptions());
+  const actors = {
+    data: Array.from({ length: 6 })
+      .fill(null)
+      .map(() => ({
+        id: "01K6QPS3TMRBYGXS22ZVY0MH87",
+        externalId: "ASDSADSA",
+        mapCoords: { lat: 12_335_213, lon: 355 },
+        localPosition: { x: -5, y: 12 },
+        type: "DRONE",
+      })),
+  };
 
   if (!actors.data) {
     return null;

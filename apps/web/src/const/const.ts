@@ -1,6 +1,8 @@
+import { ActorAlignment } from "../../../server/prisma/generated/enums";
+
 export const ACTOR_TYPES_COLORS = {
-  hostile: "#FF7E7E", // red
-  neutral: "#97FF97", // green
-  unknown: "#FFFF82", // yellow
-  friendly: "#7FE2FF", // blue
-};
+  [ActorAlignment.HOSTILE]: "#FF7E7E", // red
+  [ActorAlignment.NEUTRAL]: "#97FF97", // green
+  [ActorAlignment.UNKNOWN]: "#FFFF82", // yellow
+  [ActorAlignment.FRIENDLY]: "#7FE2FF", // blue
+} as const;

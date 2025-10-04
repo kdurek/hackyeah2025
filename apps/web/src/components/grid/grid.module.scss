@@ -1,14 +1,14 @@
 .grid {
     margin: auto;
-    width: 540px;
+    width: 700px;
 
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
     padding: 10px;
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 18px 36px ;
+    gap: 18px 36px;
 }
 
 .gridItem {
@@ -17,7 +17,9 @@
     height: 52px;
 }
 
-.avatar, .middle, .actions {
+.avatar,
+.middle,
+.actions {
     border: 1px solid white;
     display: flex;
     justify-content: center;
@@ -26,9 +28,6 @@
 
 .avatar {
     color: #D23A4F;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
     width: 52px;
     height: 52px;
 }
