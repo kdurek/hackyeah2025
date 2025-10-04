@@ -15,7 +15,11 @@ export const threatRouter = {
       const transformedThreats = threats.map((threat) => ({
         id: threat.id,
         mapCoords: { lat: threat.mapCoordsLat, lon: threat.mapCoordsLon },
-        localPosition: { x: threat.localPositionX, y: threat.localPositionY },
+        localPosition: {
+          x: threat.localPositionX,
+          y: threat.localPositionY,
+          z: threat.localPositionZ,
+        },
         type: threat.type,
       }));
       return transformedThreats;
@@ -26,7 +30,11 @@ export const threatRouter = {
     .input(
       z.object({
         mapCoords: z.object({ lat: z.number(), lon: z.number() }),
-        localPosition: z.object({ x: z.number(), y: z.number() }),
+        localPosition: z.object({
+          x: z.number(),
+          y: z.number(),
+          z: z.number(),
+        }),
         type: z.enum(ThreatType),
       })
     )
@@ -38,6 +46,7 @@ export const threatRouter = {
             mapCoordsLon: input.mapCoords.lon,
             localPositionX: input.localPosition.x,
             localPositionY: input.localPosition.y,
+            localPositionZ: input.localPosition.z,
             type: input.type,
           },
         })
@@ -49,7 +58,11 @@ export const threatRouter = {
       z.object({
         id: z.string(),
         mapCoords: z.object({ lat: z.number(), lon: z.number() }),
-        localPosition: z.object({ x: z.number(), y: z.number() }),
+        localPosition: z.object({
+          x: z.number(),
+          y: z.number(),
+          z: z.number(),
+        }),
         type: z.enum(ThreatType),
       })
     )
@@ -62,6 +75,7 @@ export const threatRouter = {
             mapCoordsLon: input.mapCoords.lon,
             localPositionX: input.localPosition.x,
             localPositionY: input.localPosition.y,
+            localPositionZ: input.localPosition.z,
             type: input.type,
           },
         })
