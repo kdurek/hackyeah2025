@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { IndexPage } from "@/pages/index";
 import { orpc } from "@/utils/orpc";
 
 export const Route = createFileRoute("/")({
@@ -11,6 +12,8 @@ const TITLE_TEXT = "HackYeah2025";
 function HomeComponent() {
   const healthCheck = useQuery(orpc.healthCheck.queryOptions());
   const healthCheckStatus = healthCheck.data ? "Connected" : "Disconnected";
+
+  return <IndexPage />;
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-2">
