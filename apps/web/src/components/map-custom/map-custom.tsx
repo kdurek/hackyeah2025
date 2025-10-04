@@ -1,11 +1,15 @@
-// import { useQuery } from "@tanstack/react-query";
-// import { useEffect, useState } from "react";
-
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { ACTOR_TYPES_COLORS } from "@/const/const";
-// import { useEffect, useState } from "react";
 import { orpc } from "@/utils/orpc";
 import styles from "./map-custom.module.scss";
+
+type MarkerData = {
+  id: string;
+  x: number;
+  y: number;
+  color: string;
+};
 
 const Marker = ({ x, y, color }: { x: number; y: number; color: string }) => (
   <div
@@ -24,32 +28,29 @@ const MapCustom = () => {
       refetchInterval: 1000,
     })
   );
-  //   const [state, setState] = useState<[number, number]>([0, 100]);
 
-  //   useEffect(() => {
-  //     const interval = setInterval(() => {
-  //       setState(([x, y]) => {
-  //         if (x >= 100) {
-  //           return [0, 0];
-  //         }
-  //         return [x + 5, y - 5];
-  //       });
-  //     }, 1000);
+  const [simulatedMarkers, setSimulatedMarkers] = useState<MarkerData[]>([]);
 
-  //     return () => clearInterval(interval);
-  //   }, []);
+  useEffect(() => {
+    const colors = Object.values(ACTOR_TYPES_COLORS);
+
+    const interval = setInterval(() => {
+      const newMarker: MarkerData = {
+        id: `simulated-${Date.now()}-${Math.random()}`,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      };
+
+      setSimulatedMarkers((prev) => [...prev, newMarker]);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className={styles.mapWrapper}>
       <div className={styles.mapCustom}>
-        {/* <div
-          className={styles.marker}
-          style={{
-            transform: `translate(${state[0] * 10}%, ${state[1] * 10}%)`,
-            left: 0,
-            bottom: 0,
-          }}
-        /> */}
         {actors.data?.map((actor) => (
           <Marker
             color={ACTOR_TYPES_COLORS[actor.alignment]}
@@ -58,18 +59,14 @@ const MapCustom = () => {
             y={actor.localPosition.z}
           />
         ))}
-        {/* <div
-          style={{
-            position: "absolute",
-            top: 10,
-            left: 10,
-            color: "white",
-            background: "black",
-            padding: "5px",
-          }}
-        >
-          X: {state[0]}, Y: {state[1]}
-        </div> */}
+        {simulatedMarkers.map((marker) => (
+          <Marker
+            color={marker.color}
+            key={marker.id}
+            x={marker.x}
+            y={marker.y}
+          />
+        ))}
       </div>
     </div>
   );
