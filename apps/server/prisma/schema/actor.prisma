@@ -18,6 +18,9 @@ model Actor {
   localPositionX Float
   localPositionY Float
   localPositionZ Float
+  rotationX      Float
+  rotationY      Float
+  rotationZ      Float
   type           ActorType
   alignment      ActorAlignment
   createdAt      DateTime       @default(now())
