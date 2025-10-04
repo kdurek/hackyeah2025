@@ -4,16 +4,24 @@ enum ActorType {
   INFANTRY
 }
 
+enum ActorAlignment {
+  HOSTILE
+  NEUTRAL
+  UNKNOWN
+  FRIENDLY
+}
+
 model Actor {
-  id             String    @id @default(ulid())
+  id             String         @id @default(ulid())
   mapCoordsLat   Float
   mapCoordsLon   Float
   localPositionX Float
   localPositionY Float
   localPositionZ Float
   type           ActorType
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  alignment      ActorAlignment
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 
   @@map("actor")
 }

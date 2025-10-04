@@ -1,4 +1,4 @@
-import { ActorType } from "prisma/generated/enums";
+import { ActorAlignment, ActorType } from "prisma/generated/enums";
 import z from "zod";
 import prisma from "../db";
 import { publicProcedure } from "../lib/orpc";
@@ -21,6 +21,7 @@ export const actorRouter = {
           z: actor.localPositionZ,
         },
         type: actor.type,
+        alignment: actor.alignment,
         createdAt: actor.createdAt,
         updatedAt: actor.updatedAt,
       }));
@@ -38,6 +39,7 @@ export const actorRouter = {
           z: z.number(),
         }),
         type: z.enum(ActorType),
+        alignment: z.enum(ActorAlignment),
       })
     )
     .handler(
@@ -50,6 +52,7 @@ export const actorRouter = {
             localPositionY: input.localPosition.y,
             localPositionZ: input.localPosition.z,
             type: input.type,
+            alignment: input.alignment,
           },
         })
     ),
@@ -66,6 +69,7 @@ export const actorRouter = {
           z: z.number(),
         }),
         type: z.enum(ActorType),
+        alignment: z.enum(ActorAlignment),
       })
     )
     .handler(
@@ -79,6 +83,7 @@ export const actorRouter = {
             localPositionY: input.localPosition.y,
             localPositionZ: input.localPosition.z,
             type: input.type,
+            alignment: input.alignment,
           },
         })
     ),
