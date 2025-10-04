@@ -32,5 +32,9 @@
       "pnpm dlx ultracite fix"
     ]
   },
-  "packageManager": "pnpm@10.14.0"
+  "packageManager": "pnpm@10.18.0",
+  "volta": {
+    "node": "22.20.0",
+    "pnpm": "10.18.0"
+  }
 }
