@@ -1,0 +1,19 @@
+enum ActorType {
+  DRONE
+  ARMOR
+  INFANTRY
+}
+
+model Actor {
+  id             String    @id @default(ulid())
+  mapCoordsLat   Float
+  mapCoordsLon   Float
+  localPositionX Float
+  localPositionY Float
+  localPositionZ Float
+  type           ActorType
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@map("actor")
+}
