@@ -59,14 +59,20 @@ function RootDocument() {
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body
+        style={{
+          backgroundImage: "url('/bg.png')",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center center",
+        }}
+      >
         <div className="grid h-svh grid-rows-[auto_1fr]">
-          <Header />
+          {/* <Header /> */}
           {isFetching ? <Loader /> : <Outlet />}
         </div>
         <Toaster richColors />
-        <TanStackRouterDevtools position="bottom-left" />
-        <ReactQueryDevtools buttonPosition="bottom-right" position="bottom" />
+        {/* <TanStackRouterDevtools position="bottom-left" /> */}
+        {/* <ReactQueryDevtools buttonPosition="bottom-right" position="bottom" /> */}
         <Scripts />
       </body>
     </html>
