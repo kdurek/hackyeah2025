@@ -1,9 +1,31 @@
+/** biome-ignore-all lint/performance/noImgElement: <explanation> */
 import { useQuery } from "@tanstack/react-query";
 import { ACTOR_TYPES_COLORS } from "@/const/const";
 import type { useSimulatedActorsReturnType } from "@/hooks/useSimulatedActors";
 import { useIsMock } from "@/pages/index";
 import { orpc } from "@/utils/orpc";
-import styles from "./grid.module.scss";
+import type {
+  ActorAlignment,
+  ActorType,
+} from "../../../../server/prisma/generated/enums";
+
+const getActorType = (type: ActorType) => {
+  switch (type) {
+    case "DRONE":
+      return "Drone";
+    case "ARMOR":
+      return "Armor";
+    case "INFANTRY":
+      return "Infantry";
+    default:
+      return "Unknown";
+  }
+};
+
+const getActorIcon = (type: ActorType, alignment: ActorAlignment) => {
+  const imageSrc = `${type.toLowerCase()}-${alignment.toLowerCase()}.png`;
+  return <img alt="drone" height={24} src={imageSrc} width={24} />;
+};
 
 const Grid = ({ actors }: { actors: useSimulatedActorsReturnType }) => {
   const isMock = useIsMock();
@@ -35,17 +57,22 @@ const Grid = ({ actors }: { actors: useSimulatedActorsReturnType }) => {
   }
 
   return (
-    <div className={styles.grid}>
+    <div className="mx-auto grid w-[700px] grid-cols-2 gap-x-9 gap-y-[18px] overflow-y-scroll border-white border-y-2 py-4">
       {actors.data.map((item) => (
-        <div className={styles.gridItem} key={item.id}>
+        <div className="flex h-[52px] gap-2" key={item.id}>
           <div
-            className={styles.avatar}
+            className="flex size-[52px] items-center justify-center border border-white"
             style={{ color: ACTOR_TYPES_COLORS[item.alignment] }}
           >
-            WG
+            {getActorIcon(item.type, item.alignment)}
           </div>
-          <div className={styles.middle}>{item.type}</div>
-          <div className={styles.actions}>actions</div>
+          <div className="flex flex-grow flex-col border border-white p-2">
+            <div className="font-medium text-sm">{getActorType(item.type)}</div>
+            <div className="text-xs">{item.alignment}</div>
+          </div>
+          <div className="flex size-[52px] items-center justify-center border border-white p-2">
+            <img alt="compass" height={24} src="/compass.png" width={24} />
+          </div>
         </div>
       ))}
     </div>
