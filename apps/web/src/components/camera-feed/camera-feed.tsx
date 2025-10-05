@@ -1,7 +1,7 @@
 import useWebSocket from "react-use-websocket";
 import styles from "./camera-feed.module.scss";
 
-const socketUrl = "ws://localhost:3000/ws";
+const socketUrl = "ws://antelope-chief-catfish.ngrok-free.app/ws";
 
 const CameraFeed = () => {
   const { lastMessage } = useWebSocket(socketUrl, {
@@ -11,19 +11,26 @@ const CameraFeed = () => {
   });
 
   if (!lastMessage) {
-    return <div className={styles.cameraFeed} />;
+    return (
+      <div className={styles.cameraFeedWrapper}>
+        <div className={styles.cameraFeed} />
+      </div>
+    );
   }
 
   return (
-    <picture className={styles.cameraFeed}>
-      <source srcSet={`data:image/jpg;base64,${lastMessage?.data}`} />
-      <img
-        alt="Stream"
-        height="100%"
-        src={`data:image/jpg;base64,${lastMessage?.data}`}
-        width="100%"
-      />
-    </picture>
+    <div className={styles.cameraFeedWrapper}>
+      <picture className={styles.cameraFeed}>
+        <source srcSet={`data:image/jpg;base64,${lastMessage?.data}`} />
+        <img
+          alt="Stream"
+          className={styles.cameraImage}
+          height="100%"
+          src={`data:image/jpg;base64,${lastMessage?.data}`}
+          width="100%"
+        />
+      </picture>
+    </div>
   );
 };
 

@@ -12,11 +12,11 @@ export const useIsMock = () => useContext(MockContext);
 const IndexPage = () => {
   const simulatedActors = useSimulatedActors(1000);
 
-  const [isMock, setIsMock] = useState(true);
+  const [isMock, setIsMock] = useState(false);
 
   return (
     <MockContext.Provider value={isMock}>
-      <button
+      {/* <button
         onClick={() => {
           setIsMock((m) => !m);
           simulatedActors.reset();
@@ -24,15 +24,20 @@ const IndexPage = () => {
         type="button"
       >
         Toggle Mock Data: {isMock ? "Mock" : "Real"}
-      </button>
+      </button> */}
 
       <div className={styles.index}>
         <div className={styles.wrapper}>
-          <MapCustom actors={simulatedActors} />
-          <CameraFeed />
-        </div>
+          <div className={styles.left}>
+            <MapCustom actors={simulatedActors} />
 
-        <Grid actors={simulatedActors} />
+            <Grid actors={simulatedActors} />
+          </div>
+
+          <div className={styles.right}>
+            <CameraFeed />
+          </div>
+        </div>
       </div>
     </MockContext.Provider>
   );
