@@ -36,7 +36,14 @@ const Marker = ({
 }) => (
   <div
     className={styles.markerWrapper}
-    style={{ left: `${x}%`, bottom: `${y}%` }}
+    style={{
+      left: `${x}%`,
+      bottom: `${y}%`,
+      transform: "translate(-50%, 50%)",
+      ...(actorType !== "DRONE" && {
+        filter: "none",
+      }),
+    }}
   >
     <div
       className={styles.marker}
