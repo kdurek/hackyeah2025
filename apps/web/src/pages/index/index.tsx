@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { CameraFeed } from "@/components/camera-feed/camera-feed";
 import { Grid } from "@/components/grid/grid";
 import { MapCustom } from "@/components/map-custom/map-custom";
 import { useSimulatedActors } from "@/hooks/useSimulatedActors";
@@ -26,7 +27,10 @@ const IndexPage = () => {
       </button>
 
       <div className={styles.index}>
-        <MapCustom actors={simulatedActors} />
+        <div className={styles.wrapper}>
+          <MapCustom actors={simulatedActors} />
+          <CameraFeed />
+        </div>
 
         <Grid actors={simulatedActors} />
       </div>

@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { createServer } from "node:http";
 import fastifyCors from "@fastify/cors";
-
+import fastifyWebsocket, { type WebSocket } from "@fastify/websocket";
 import { OpenAPIHandler } from "@orpc/openapi/node";
 import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
 import { onError } from "@orpc/server";
@@ -79,6 +79,36 @@ const fastify = Fastify({
 });
 
 fastify.register(fastifyCors, baseCorsConfig);
+
+fastify.register(fastifyWebsocket);
+
+// Store all connected clients
+const clients = new Set<WebSocket>();
+
+fastify.register((f) =>
+  f.get("/ws", { websocket: true }, (socket: WebSocket) => {
+    // Add the new client to our set of clients
+    clients.add(socket);
+    f.log.info("Client connected");
+
+    socket.on("message", (message) => {
+      // The `message` is likely a Buffer containing the photo's byte array.
+      // We are now broadcasting this message to all connected clients.
+      for (const client of clients) {
+        if (client.readyState === 1) {
+          // Check if the connection is open
+          client.send(message.toString());
+        }
+      }
+    });
+
+    socket.on("close", () => {
+      // Remove the client from the set when they disconnect
+      clients.delete(socket);
+      f.log.info("Client disconnected");
+    });
+  })
+);
 
 fastify.route({
   method: ["GET", "POST"],
