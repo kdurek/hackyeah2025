@@ -6,6 +6,7 @@ type AlignmentKey = keyof typeof ACTOR_TYPES_COLORS;
 
 export type useSimulatedActorsReturnType = {
   data: Actor[];
+  reset: () => void;
 };
 
 export function useSimulatedActors(
@@ -44,5 +45,5 @@ export function useSimulatedActors(
     return () => clearInterval(interval);
   }, [spawnIntervalMs]);
 
-  return { data: actors };
+  return { data: actors, reset: () => setActors([]) };
 }

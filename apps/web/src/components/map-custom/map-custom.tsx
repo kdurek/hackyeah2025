@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { ACTOR_TYPES_COLORS } from "@/const/const";
 import type { useSimulatedActorsReturnType } from "@/hooks/useSimulatedActors";
+import { useIsMock } from "@/pages/index";
 import { orpc } from "@/utils/orpc";
-import type { Actor } from "../../../../server/prisma/generated/client";
+import type { ActorType } from "../../../../server/prisma/generated/client";
 import styles from "./map-custom.module.scss";
 
 /**
@@ -20,15 +21,52 @@ import styles from "./map-custom.module.scss";
 //   color: string;
 // };
 
-const Marker = ({ x, y, color }: { x: number; y: number; color: string }) => (
+const Marker = ({
+  x,
+  y,
+  color,
+  rotation,
+  actorType,
+}: {
+  x: number;
+  y: number;
+  color: string;
+  rotation: { x: number; y: number; z: number };
+  actorType: ActorType;
+}) => (
   <div
-    className={styles.marker}
-    style={{
-      border: `3px solid ${color}`,
-      left: `${x}%`,
-      bottom: `${y}%`,
-    }}
-  />
+    className={styles.markerWrapper}
+    style={{ left: `${x}%`, bottom: `${y}%` }}
+  >
+    <div
+      className={styles.marker}
+      style={{
+        border: `3px solid ${color}`,
+        backgroundColor: color,
+        transform: `rotate(${rotation.y}deg)`,
+        // ROMB
+        ...(actorType === "DRONE" && {
+          width: 25,
+          height: 25,
+          clipPath: "polygon(50% 0%, 85% 50%, 50% 100%, 15% 50%)",
+          filter: "drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5))",
+        }),
+        // SQUARE
+        ...(actorType === "ARMOR" && {
+          width: 20,
+          height: 20,
+        }),
+        // CIRCLE
+        ...(actorType === "INFANTRY" && {
+          width: 20,
+          height: 20,
+          borderRadius: "100%",
+        }),
+      }}
+    >
+      {/* {rotation.x} , {rotation.y} , {rotation.z} */}
+    </div>
+  </div>
 );
 
 // function useSimulatedMarkers(spawnIntervalMs: number): MarkerData[] {
@@ -53,11 +91,18 @@ const Marker = ({ x, y, color }: { x: number; y: number; color: string }) => (
 // }
 
 const MapCustom = ({ actors }: { actors: useSimulatedActorsReturnType }) => {
-  //   const actors = useQuery(
-  //     orpc.actor.getAll.queryOptions({
-  //       refetchInterval: 1000,
-  //     })
-  //   );
+  const isMock = useIsMock();
+
+  const actorsQ = useQuery(
+    orpc.actor.getAll.queryOptions({
+      refetchInterval: 1000,
+      enabled: !isMock,
+    })
+  );
+
+  if (!isMock) {
+    actors = actorsQ;
+  }
 
   //   const simulatedMarkers = useSimulatedMarkers(2000);
 
@@ -66,8 +111,10 @@ const MapCustom = ({ actors }: { actors: useSimulatedActorsReturnType }) => {
       <div className={styles.mapCustom}>
         {actors.data?.map((actor) => (
           <Marker
+            actorType={actor.type}
             color={ACTOR_TYPES_COLORS[actor.alignment]}
             key={actor.id}
+            rotation={actor.rotation}
             x={actor.localPosition.x}
             y={actor.localPosition.z}
           />

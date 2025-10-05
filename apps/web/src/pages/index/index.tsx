@@ -1,17 +1,36 @@
+import { createContext, useContext, useState } from "react";
 import { Grid } from "@/components/grid/grid";
 import { MapCustom } from "@/components/map-custom/map-custom";
 import { useSimulatedActors } from "@/hooks/useSimulatedActors";
 import styles from "./index.module.scss";
 
+const MockContext = createContext(false);
+
+export const useIsMock = () => useContext(MockContext);
+
 const IndexPage = () => {
-  const simulatedActors = useSimulatedActors(2000);
+  const simulatedActors = useSimulatedActors(1000);
+
+  const [isMock, setIsMock] = useState(true);
 
   return (
-    <div className={styles.index}>
-      <MapCustom actors={simulatedActors} />
+    <MockContext.Provider value={isMock}>
+      <button
+        onClick={() => {
+          setIsMock((m) => !m);
+          simulatedActors.reset();
+        }}
+        type="button"
+      >
+        Toggle Mock Data: {isMock ? "Mock" : "Real"}
+      </button>
 
-      <Grid actors={simulatedActors} />
-    </div>
+      <div className={styles.index}>
+        <MapCustom actors={simulatedActors} />
+
+        <Grid actors={simulatedActors} />
+      </div>
+    </MockContext.Provider>
   );
 };
 

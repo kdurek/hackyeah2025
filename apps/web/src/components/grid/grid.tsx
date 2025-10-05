@@ -1,11 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import { ACTOR_TYPES_COLORS } from "@/const/const";
 import type { useSimulatedActorsReturnType } from "@/hooks/useSimulatedActors";
+import { useIsMock } from "@/pages/index";
 import { orpc } from "@/utils/orpc";
 import styles from "./grid.module.scss";
 
 const Grid = ({ actors }: { actors: useSimulatedActorsReturnType }) => {
-  // const actors = useQuery(orpc.actor.getAll.queryOptions());
+  const isMock = useIsMock();
+
+  const actorsQ = useQuery(
+    orpc.actor.getAll.queryOptions({
+      enabled: !isMock,
+    })
+  );
+
+  if (!isMock) {
+    actors = actorsQ;
+  }
+
   // const actors = {
   //   data: Array.from({ length: 6 })
   //     .fill(null)

@@ -20,11 +20,16 @@
     background-repeat: no-repeat;
 }
 
-.marker {
+
+
+.markerWrapper {
     position: absolute;
-    width: 15px;
+    filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
+}
+
+.marker {
+    width: 30px;
     height: 15px;
     border: 3px solid red;
-    border-radius: 50%;
     box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.5);
 }
