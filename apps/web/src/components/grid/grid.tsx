@@ -69,7 +69,10 @@ const Grid = ({
   }
 
   return (
-    <div className="mx-auto grid w-[700px] cursor-pointer grid-cols-2 gap-x-9 gap-y-[18px] overflow-y-scroll border-white border-y-2 py-4">
+    <div
+      className="mx-auto grid w-[700px] cursor-pointer grid-cols-2 gap-x-9 gap-y-[18px] overflow-y-scroll border-white border-y-2 py-4"
+      style={{ overflowY: "scroll", maxHeight: 290 }}
+    >
       {actors.data.map((item) => (
         <div
           className="flex h-16 gap-2"
