@@ -81,18 +81,15 @@ const Grid = ({
   }
 
   return (
-    <div
-      className="mx-auto grid w-[700px] grid-cols-2 gap-x-9 gap-y-[18px] overflow-y-scroll border-white border-y-2 py-4"
-      style={{ overflowY: "scroll", maxHeight: 380 }}
-    >
+    <div className="mx-auto grid w-[700px] cursor-pointer grid-cols-2 gap-x-9 gap-y-[18px] overflow-y-scroll border-white border-y-2 py-4">
       {actors.data.map((item) => (
         <div
-          className="flex h-[52px] cursor-pointer gap-2"
+          className="flex h-16 gap-2"
           key={item.id}
           onClick={() => setSelected(item.id)}
         >
           <div
-            className="flex size-[52px] items-center justify-center border border-white"
+            className="flex size-16 items-center justify-center border border-white"
             style={{
               color: ACTOR_TYPES_COLORS[item.alignment],
               ...(selected === item.id && { borderColor: "#D23A4F" }),
@@ -101,17 +98,24 @@ const Grid = ({
             {getActorIcon(item.type, item.alignment)}
           </div>
           <div
-            className="flex flex-grow flex-col border border-white p-2"
+            className="flex flex-grow items-center border border-white px-2"
             style={{ ...(selected === item.id && { borderColor: "#D23A4F" }) }}
           >
-            <div className="font-medium text-sm">{getActorType(item.type)}</div>
-            <div className="text-xs">{item.alignment}</div>
+            <div className="flex flex-col">
+              <div className="font-medium">{getActorType(item.type)}</div>
+              <div className="text-xs">{getActorAlignment(item.alignment)}</div>
+              <div className="text-xs">
+                {formatDistanceToNowStrict(item.updatedAt, {
+                  addSuffix: true,
+                })}
+              </div>
+            </div>
           </div>
           <div
-            className="flex size-[52px] items-center justify-center border border-white p-2"
+            className="flex size-16 items-center justify-center border border-white p-2"
             style={{ ...(selected === item.id && { borderColor: "#D23A4F" }) }}
           >
-            <img alt="compass" height={24} src="/compass.png" width={24} />
+            <img alt="compass" height={32} src="/compass.png" width={32} />
           </div>
         </div>
       ))}
