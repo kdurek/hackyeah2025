@@ -9,7 +9,7 @@ export const actorRouter = {
     .handler(async () => {
       const actors = await prisma.actor.findMany({
         orderBy: {
-          createdAt: "desc",
+          updatedAt: "desc",
         },
       });
       const transformedActors = actors.map((actor) => ({
