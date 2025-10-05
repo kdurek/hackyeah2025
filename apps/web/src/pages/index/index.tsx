@@ -14,7 +14,7 @@ const IndexPage = () => {
 
   const [selected, setSelected] = useState(null);
 
-  const [isMock, setIsMock] = useState(true);
+  const [isMock, setIsMock] = useState(false);
 
   return (
     <MockContext.Provider value={isMock}>
