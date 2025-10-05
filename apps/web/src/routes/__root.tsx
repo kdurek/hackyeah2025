@@ -1,7 +1,5 @@
 import type { QueryClient } from "@tanstack/react-query";
 
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
 import {
   createRootRouteWithContext,
   HeadContent,
@@ -9,11 +7,9 @@ import {
   Scripts,
   useRouterState,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import Loader from "@/components/loader";
 import { Toaster } from "@/components/ui/sonner";
 import type { orpc } from "@/utils/orpc";
-import Header from "../components/header";
 import appCss from "../index.css?url";
 
 export type RouterAppContext = {
@@ -56,6 +52,16 @@ function RootDocument() {
           crossOrigin=""
           href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          rel="stylesheet"
+        />
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link
+          crossOrigin=""
+          href="https://fonts.gstatic.com"
+          rel="preconnect"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap"
           rel="stylesheet"
         />
       </head>

@@ -102,7 +102,7 @@ const Grid = ({
             style={{ ...(selected === item.id && { borderColor: "#D23A4F" }) }}
           >
             <div className="flex flex-col">
-              <div className="font-medium">{getActorType(item.type)}</div>
+              <div className="font-black">{getActorType(item.type)}</div>
               <div className="text-xs">{getActorAlignment(item.alignment)}</div>
               <div className="text-xs">
                 {formatDistanceToNowStrict(item.updatedAt, {
