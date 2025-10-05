@@ -64,18 +64,6 @@ const Grid = ({
     actors = actorsQ;
   }
 
-  // const actors = {
-  //   data: Array.from({ length: 6 })
-  //     .fill(null)
-  //     .map(() => ({
-  //       id: "01K6QPS3TMRBYGXS22ZVY0MH87",
-  //       externalId: "ASDSADSA",
-  //       mapCoords: { lat: 12_335_213, lon: 355 },
-  //       localPosition: { x: -5, y: 12 },
-  //       type: "DRONE",
-  //     })),
-  // };
-
   if (!actors.data) {
     return null;
   }

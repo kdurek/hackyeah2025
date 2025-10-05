@@ -1,25 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 import { ACTOR_TYPES_COLORS } from "@/const/const";
 import type { useSimulatedActorsReturnType } from "@/hooks/useSimulatedActors";
 import { useIsMock } from "@/pages/index";
 import { orpc } from "@/utils/orpc";
 import type { ActorType } from "../../../../server/prisma/generated/client";
 import styles from "./map-custom.module.scss";
-
-/**
- *
- * TODO
- * 1. Add rotation to the markers
- * 2. Add actor type to the markers, eg, tank
- */
-
-// type MarkerData = {
-//   id: string;
-//   x: number;
-//   y: number;
-//   color: string;
-// };
 
 const Marker = ({
   x,
@@ -80,27 +65,6 @@ const Marker = ({
   </div>
 );
 
-// function useSimulatedMarkers(spawnIntervalMs: number): MarkerData[] {
-//   const [simulatedMarkers, setSimulatedMarkers] = useState<MarkerData[]>([]);
-
-//   useEffect(() => {
-//     const colors = Object.values(ACTOR_TYPES_COLORS);
-//     const interval = setInterval(() => {
-//       const newMarker: MarkerData = {
-//         id: `simulated-${Date.now()}-${Math.random()}`,
-//         x: Math.random() * 100,
-//         y: Math.random() * 100,
-//         color: colors[Math.floor(Math.random() * colors.length)],
-//       };
-//       setSimulatedMarkers((prev) => [...prev, newMarker]);
-//     }, spawnIntervalMs);
-
-//     return () => clearInterval(interval);
-//   }, [spawnIntervalMs]);
-
-//   return simulatedMarkers;
-// }
-
 const MapCustom = ({
   actors,
   selected,
@@ -123,8 +87,6 @@ const MapCustom = ({
     actors = actorsQ;
   }
 
-  //   const simulatedMarkers = useSimulatedMarkers(2000);
-
   return (
     <div className={styles.mapWrapper}>
       <div className={styles.mapCustom}>
@@ -140,14 +102,6 @@ const MapCustom = ({
             y={actor.localPosition.z}
           />
         ))}
-        {/* {simulatedMarkers.map((marker) => (
-          <Marker
-            color={marker.color}
-            key={marker.id}
-            x={marker.x}
-            y={marker.y}
-          />
-        ))}  */}
       </div>
     </div>
   );
