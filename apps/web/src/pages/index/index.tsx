@@ -12,7 +12,9 @@ export const useIsMock = () => useContext(MockContext);
 const IndexPage = () => {
   const simulatedActors = useSimulatedActors(1000);
 
-  const [isMock, setIsMock] = useState(false);
+  const [selected, setSelected] = useState(null);
+
+  const [isMock, setIsMock] = useState(true);
 
   return (
     <MockContext.Provider value={isMock}>
@@ -29,9 +31,17 @@ const IndexPage = () => {
       <div className={styles.index}>
         <div className={styles.wrapper}>
           <div className={styles.left}>
-            <MapCustom actors={simulatedActors} />
+            <MapCustom
+              actors={simulatedActors}
+              selected={selected}
+              setSelected={setSelected}
+            />
 
-            <Grid actors={simulatedActors} />
+            <Grid
+              actors={simulatedActors}
+              selected={selected}
+              setSelected={setSelected}
+            />
           </div>
 
           <div className={styles.right}>

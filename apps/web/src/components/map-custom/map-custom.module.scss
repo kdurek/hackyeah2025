@@ -3,8 +3,8 @@
     width: 700px;
 
     border-top: 2px solid white;
-    padding: 10px 0;
-
+    padding: 16px 0;
+    margin-bottom: 26px;
 }
 
 
@@ -29,9 +29,29 @@
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 1));
 }
 
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
 .marker {
     width: 30px;
     height: 15px;
     border: 3px solid red;
     box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.5);
+}
+
+.selection {
+    border: 2px solid #D23A4F;
+
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    z-index: 1;
+    transform: translate(-20px, -20px);
 }

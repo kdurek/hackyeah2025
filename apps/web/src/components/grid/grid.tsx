@@ -27,7 +27,15 @@ const getActorIcon = (type: ActorType, alignment: ActorAlignment) => {
   return <img alt="drone" height={24} src={imageSrc} width={24} />;
 };
 
-const Grid = ({ actors }: { actors: useSimulatedActorsReturnType }) => {
+const Grid = ({
+  actors,
+  selected,
+  setSelected,
+}: {
+  actors: useSimulatedActorsReturnType;
+  selected: string;
+  setSelected: (id: string) => void;
+}) => {
   const isMock = useIsMock();
 
   const actorsQ = useQuery(
@@ -57,20 +65,38 @@ const Grid = ({ actors }: { actors: useSimulatedActorsReturnType }) => {
   }
 
   return (
-    <div className="mx-auto grid w-[700px] grid-cols-2 gap-x-9 gap-y-[18px] overflow-y-scroll border-white border-y-2 py-4">
+    <div
+      className="mx-auto grid w-[700px] grid-cols-2 gap-x-9 gap-y-[18px] overflow-y-scroll border-white border-y-2 py-4"
+      style={{ overflowY: "scroll", maxHeight: 380 }}
+    >
       {actors.data.map((item) => (
-        <div className="flex h-[52px] gap-2" key={item.id}>
+        <div
+          className="flex h-[52px] cursor-pointer gap-2"
+          key={item.id}
+          onClick={() => setSelected(item.id)}
+        >
           <div
-            className="flex size-[52px] items-center justify-center border border-white"
-            style={{ color: ACTOR_TYPES_COLORS[item.alignment] }}
+            className={
+              "flex size-[52px] items-center justify-center border border-white"
+            }
+            style={{
+              color: ACTOR_TYPES_COLORS[item.alignment],
+              ...(selected === item.id && { borderColor: "#D23A4F" }),
+            }}
           >
             {getActorIcon(item.type, item.alignment)}
           </div>
-          <div className="flex flex-grow flex-col border border-white p-2">
+          <div
+            className="flex flex-grow flex-col border border-white p-2"
+            style={{ ...(selected === item.id && { borderColor: "#D23A4F" }) }}
+          >
             <div className="font-medium text-sm">{getActorType(item.type)}</div>
             <div className="text-xs">{item.alignment}</div>
           </div>
-          <div className="flex size-[52px] items-center justify-center border border-white p-2">
+          <div
+            className="flex size-[52px] cursor-pointer items-center justify-center border border-white p-2"
+            style={{ ...(selected === item.id && { borderColor: "#D23A4F" }) }}
+          >
             <img alt="compass" height={24} src="/compass.png" width={24} />
           </div>
         </div>

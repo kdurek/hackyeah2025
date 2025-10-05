@@ -27,24 +27,30 @@ const Marker = ({
   color,
   rotation,
   actorType,
+  isSelected = false,
+  ...props
 }: {
   x: number;
   y: number;
   color: string;
   rotation: { x: number; y: number; z: number };
   actorType: ActorType;
+  isSelected: boolean;
 }) => (
   <div
     className={styles.markerWrapper}
     style={{
       left: `${x}%`,
       bottom: `${y}%`,
-      transform: "translate(-50%, 50%)",
+      transform: `translate(-50%, 50%) scale(${isSelected ? 1.5 : 1})`,
       ...(actorType !== "DRONE" && {
         filter: "none",
       }),
     }}
+    {...props}
   >
+    {isSelected && <div className={styles.selection} />}
+
     <div
       className={styles.marker}
       style={{
@@ -70,9 +76,7 @@ const Marker = ({
           borderRadius: "100%",
         }),
       }}
-    >
-      {/* {rotation.x} , {rotation.y} , {rotation.z} */}
-    </div>
+    />
   </div>
 );
 
@@ -97,12 +101,20 @@ const Marker = ({
 //   return simulatedMarkers;
 // }
 
-const MapCustom = ({ actors }: { actors: useSimulatedActorsReturnType }) => {
+const MapCustom = ({
+  actors,
+  selected,
+  setSelected,
+}: {
+  actors: useSimulatedActorsReturnType;
+  selected: string;
+  setSelected: (id: string) => void;
+}) => {
   const isMock = useIsMock();
 
   const actorsQ = useQuery(
     orpc.actor.getAll.queryOptions({
-      refetchInterval: 1000,
+      refetchInterval: 200,
       enabled: !isMock,
     })
   );
@@ -120,7 +132,9 @@ const MapCustom = ({ actors }: { actors: useSimulatedActorsReturnType }) => {
           <Marker
             actorType={actor.type}
             color={ACTOR_TYPES_COLORS[actor.alignment]}
+            isSelected={selected === actor.id}
             key={actor.id}
+            onClick={() => setSelected(actor.id)}
             rotation={actor.rotation}
             x={actor.localPosition.x}
             y={actor.localPosition.z}
